@@ -1,4 +1,3 @@
-
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -6,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DonationDetailsClient } from "./donation-details-client";
 import { User } from "@supabase/supabase-js";
+import { FC } from "react";
 
 type Donation = {
   id: string;
@@ -23,7 +23,13 @@ type Donation = {
   } | null;
 };
 
-export default async function DonationListingPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+const Page: FC<PageProps> = ({ params }) => {
   const supabase = getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -59,3 +65,5 @@ export default async function DonationListingPage({ params }: { params: { id: st
     </div>
   );
 }
+
+export default Page;
